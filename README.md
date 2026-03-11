@@ -30,8 +30,28 @@ Build a URL shortening service that accepts long URLs, generates unique short co
 - `GET /api/stats/:code` returns total click count for any short code
 - Live click counter displayed on the website with auto-refresh every 5 seconds
 
----
+### Subtask 4 — URL Expiration
 
+Users can set an optional expiration time when creating a short URL
+Expiry options: 5 minutes, 30 minutes, 1 hour, 1 day, 1 week, or Never
+Expiration timestamp is stored alongside each URL entry
+If a URL has expired, returns HTTP 410 Gone instead of redirecting
+Expiry time is displayed on the website for each shortened link
+---
+### Subtask 5 — Rate Limiting
+
+Limits each IP to 10 requests per minute on POST /api/shorten
+Tracks request count and time window per IP stored in JSONBin
+Returns HTTP 429 Too Many Requests when limit is exceeded with a retryAfter message
+Rate limit headers returned on every request:
+
+X-RateLimit-Limit — max allowed requests
+X-RateLimit-Remaining — requests left in current window
+X-RateLimit-Reset — seconds until window resets
+
+
+Website shows remaining requests after each shorten
+Displays ⛔ Rate limit reached! error when limit is hit
 ## 📡 API Endpoints
 
 | Method | Endpoint | Description |
